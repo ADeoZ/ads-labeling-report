@@ -1,25 +1,39 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <v-app>
+    <the-header />
+    <the-menu />
+    <v-main>
+      <v-container>
+        <v-card title="Настройки агентства" color="surface-secondary">
+          <agency-settings />
+        </v-card>
+      </v-container>
+    </v-main>
+    <the-footer />
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import AgencySettings from "./components/AgencySettings.vue";
+import TheFooter from "./components/Base/TheFooter.vue";
+import TheHeader from "./components/Base/TheHeader.vue";
+import TheMenu from "./components/Base/TheMenu.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    TheFooter,
+    TheMenu,
+    TheHeader,
+    AgencySettings,
   },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@media (min-width: 1920px) {
+  .v-main > .v-container {
+    max-width: 1200px;
+  }
 }
 </style>
