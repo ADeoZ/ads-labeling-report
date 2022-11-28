@@ -23,12 +23,8 @@
       label="Тип организации"
       mandatory
     >
-      <v-radio color="black" label="Юридическое лицо" value="ul"></v-radio>
-      <v-radio
-        color="red-darken-3"
-        label="Физическое лицо"
-        value="fl"
-      ></v-radio>
+      <v-radio label="Юридическое лицо" value="ul" />
+      <v-radio label="Физическое лицо" value="fl" />
     </v-radio-group>
 
     <v-btn color="success" class="mr-4" @click="validate"> Сохранить </v-btn>
@@ -49,7 +45,7 @@ export default {
     inn: "",
     innRules: [(v) => !!v || "ИНН обязателен для указания"],
 
-    type: "fl",
+    type: "ul",
     typeRules: [(v) => !!v || "Тип обязателен для указания"],
   }),
 
