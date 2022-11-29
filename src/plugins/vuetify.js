@@ -7,8 +7,8 @@ const mainTheme = {
   dark: false,
   colors: {
     background: "#e7ebf0", // фон main
-    surface: "#001e3c", // фон контейнеров
-    "surface-secondary": "#FFFFFF", // фон карточек
+    surface: "#FFFFFF", // фон контейнеров
+    "app-bars": "#001e3c", // фон меню
     primary: "#f57c00",
     secondary: "#8bc34a",
     error: "#B00020",

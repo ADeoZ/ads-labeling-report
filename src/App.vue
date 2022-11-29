@@ -4,8 +4,9 @@
     <the-menu />
     <v-main>
       <v-container>
-        <v-card title="Настройки агентства" color="surface-secondary">
+        <v-card class="rounded-0" elevation="7">
           <agency-settings />
+          <create-report />
         </v-card>
       </v-container>
     </v-main>
@@ -18,6 +19,7 @@ import AgencySettings from "./components/AgencySettings.vue";
 import TheFooter from "./components/Base/TheFooter.vue";
 import TheHeader from "./components/Base/TheHeader.vue";
 import TheMenu from "./components/Base/TheMenu.vue";
+import CreateReport from "./components/CreateReport.vue";
 
 export default {
   name: "App",
@@ -26,6 +28,7 @@ export default {
     TheMenu,
     TheHeader,
     AgencySettings,
+    CreateReport,
   },
 };
 </script>
@@ -35,5 +38,8 @@ export default {
   .v-main > .v-container {
     max-width: 1200px;
   }
+}
+.v-theme--mainTheme.v-card {
+  border-color: #f57c00;
 }
 </style>

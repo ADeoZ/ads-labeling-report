@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar density="compact" tag="nav">
+  <v-app-bar density="compact" tag="nav" color="app-bars">
     <v-row justify="center" no-gutters>
       <v-btn
         v-for="link in links"
