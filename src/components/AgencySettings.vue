@@ -30,7 +30,7 @@
         mandatory
       >
         <v-radio label="Юридическое лицо" value="ul" />
-        <v-radio label="Физическое лицо" value="fl" />
+        <v-radio label="Физическое лицо" value="ip" />
       </v-radio-group>
 
       <div class="w-100 d-flex justify-end">

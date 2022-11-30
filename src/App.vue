@@ -7,6 +7,7 @@
         <v-card class="rounded-0" elevation="7">
           <agency-settings />
           <create-report />
+          <clients-list />
         </v-card>
       </v-container>
     </v-main>
@@ -15,11 +16,12 @@
 </template>
 
 <script>
-import AgencySettings from "./components/AgencySettings.vue";
-import TheFooter from "./components/Base/TheFooter.vue";
-import TheHeader from "./components/Base/TheHeader.vue";
-import TheMenu from "./components/Base/TheMenu.vue";
-import CreateReport from "./components/CreateReport.vue";
+import AgencySettings from "@/components/AgencySettings.vue";
+import TheFooter from "@/components/Base/TheFooter.vue";
+import TheHeader from "@/components/Base/TheHeader.vue";
+import TheMenu from "@/components/Base/TheMenu.vue";
+import ClientsList from "@/components/ClientsList.vue";
+import CreateReport from "@/components/CreateReport.vue";
 
 export default {
   name: "App",
@@ -29,6 +31,7 @@ export default {
     TheHeader,
     AgencySettings,
     CreateReport,
+    ClientsList,
   },
 };
 </script>

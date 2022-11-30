@@ -1,5 +1,5 @@
 <template>
-  <v-footer app class="pa-0 v-footer" color="app-bars" height="20">
+  <v-footer app class="pa-0" color="app-bars" height="20">
     <div class="w-100 px-4 py-2 text-right text-subtitle-2">
       {{ new Date().getFullYear() }} — <strong>Aleksey Denisov</strong>
     </div>
@@ -12,7 +12,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .v-footer {
   opacity: 0.85;
 
