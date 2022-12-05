@@ -8,7 +8,7 @@
     <v-form ref="form" v-model="valid" class="pa-8">
       <v-file-input
         variant="outlined"
-        :rules="rules"
+        :rules="fileRules"
         accept=".xls,.xlsx"
         label="Загрузите файл Яндекса"
         show-size
@@ -18,7 +18,6 @@
         <v-btn color="success" class="mr-4" @click="validate">
           Сгенерировать
         </v-btn>
-        <v-btn color="error" class="mr-4" @click="reset">Отмена</v-btn>
       </div>
     </v-form>
   </v-card>
@@ -29,7 +28,8 @@ export default {
   name: "CreateReport",
 
   data: () => ({
-    rules: [
+    valid: true,
+    fileRules: [
       (value) => {
         return (
           !value ||
