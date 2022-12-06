@@ -1,14 +1,11 @@
 <template>
   <v-container class="pa-16">
     <h4 class="text-h4">Список клиентов</h4>
-    <modal-container
-      :modal-label="'Добавить клиента'"
-      :button-label="'Добавить'"
-    >
+    <modal-form :modal-label="'Добавить клиента'" :button-label="'Добавить'">
       <template v-slot="{ close }">
         <add-client-form :closeForm="close" />
       </template>
-    </modal-container>
+    </modal-form>
     <v-table class="mt-10">
       <thead>
         <tr>
@@ -32,14 +29,14 @@
 
 <script>
 import ClientsListItem from "@/components/ClientsListItem.vue";
-import ModalContainer from "@/components/Base/ModalContainer.vue";
+import ModalForm from "@/components/Base/ModalForm.vue";
 import AddClientForm from "./AddClientForm.vue";
 
 export default {
   name: "ClientsList",
   components: {
     ClientsListItem,
-    ModalContainer,
+    ModalForm,
     AddClientForm,
   },
   data: () => ({

@@ -12,7 +12,7 @@
     "sass": "^1.56.1",
     "sass-loader": "^13.2.0",
     "vue": "^3.2.13",
-    "vuetify": "^3.0.1",
+    "vuetify": "^3.0.3",
     "webpack-plugin-vuetify": "^2.0.0"
   },
   "devDependencies": {

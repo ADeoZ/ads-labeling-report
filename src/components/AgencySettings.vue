@@ -11,6 +11,7 @@
         :rules="nameRules"
         label="Наименование организации"
         variant="outlined"
+        readonly
         required
       />
 
@@ -20,6 +21,7 @@
         :rules="innRules"
         label="ИНН"
         variant="outlined"
+        readonly
         required
       />
 
@@ -27,6 +29,7 @@
         v-model="type"
         :rules="typeRules"
         label="Тип организации"
+        readonly
         mandatory
       >
         <v-radio label="Юридическое лицо" value="ul" />
@@ -48,10 +51,10 @@ export default {
   data: () => ({
     valid: true,
 
-    name: "",
+    name: "ООО «Медиаотдел»",
     nameRules: [(v) => !!v || "Наименование обязательно для указания"],
 
-    inn: "",
+    inn: "7708757496",
     innRules: [(v) => !!v || "ИНН обязателен для указания"],
 
     type: "ul",
