@@ -46,5 +46,6 @@ export default {
 :deep(.control-group) {
   position: sticky;
   bottom: 0;
+  background-color: rgb(var(--v-theme-surface));
 }
 </style>

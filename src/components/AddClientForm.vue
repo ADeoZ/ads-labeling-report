@@ -1,6 +1,10 @@
 <template>
   <v-form ref="form" v-model="valid">
-    <div class="px-16 pt-8 pb-2">
+    <div class="px-16 pt-8 pb-4">
+      <div v-if="!isEnd" class="mb-4">
+        <span class="text-h6">Контрагент</span>
+        <v-divider></v-divider>
+      </div>
       <v-text-field
         v-model="login"
         :rules="loginRules"
@@ -61,6 +65,11 @@
       <v-switch v-model="isEnd" color="primary" label="Прямой рекламодатель" />
 
       <template v-if="!isEnd">
+        <div class="mb-4">
+          <span class="text-h6">Конечный рекламодатель</span>
+          <v-divider></v-divider>
+        </div>
+
         <v-text-field
           v-model="endName"
           :rules="nameRules"
@@ -112,7 +121,7 @@
       </template>
     </div>
 
-    <div class="control-group bg-surface">
+    <div class="control-group">
       <v-divider></v-divider>
       <div class="w-100 px-16 d-flex justify-end">
         <v-btn color="success" class="mr-4 my-4" @click="validate"
@@ -157,7 +166,7 @@ export default {
     contractDate: "",
     contractDateRules: [(v) => !!v || "Дата договора обязательна для указания"],
 
-    isEnd: false,
+    isEnd: true,
 
     endName: "",
     endInn: "",
