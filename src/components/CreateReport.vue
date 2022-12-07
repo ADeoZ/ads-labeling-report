@@ -9,7 +9,6 @@
       <v-file-input
         variant="outlined"
         :rules="fileRules"
-        accept=".xls,.xlsx"
         label="Загрузите файл Яндекса"
         show-size
         required
@@ -29,14 +28,12 @@ export default {
 
   data: () => ({
     valid: true,
+
     fileRules: [
-      (value) => {
-        return (
-          !value ||
-          !value.length ||
-          value[0].size < 2000000 ||
-          "Размер файла превышает 2Мб"
-        );
+      (v) => {
+        if (!v || !v.length) return "Файл обязателен для загрузки";
+        if (v[0].size > 3000000) return "Размер файла превышает 3Мб";
+        return true;
       },
     ],
   }),
