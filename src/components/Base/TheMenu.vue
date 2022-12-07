@@ -4,9 +4,10 @@
       <v-btn
         v-for="link in links"
         :key="link"
-        color="white"
         variant="text"
-        class="mx-3"
+        :rounded="0"
+        height="48"
+        class="px-8"
       >
         {{ link }}
       </v-btn>
@@ -18,7 +19,13 @@
 export default {
   name: "TheMenu",
   data: () => ({
-    links: ["Первый", "Второй", "Третий"],
+    links: ["Клиенты", "Генерация отчёта", "Агентство"],
   }),
 };
 </script>
+
+<style scoped>
+.v-btn:hover {
+  background-color: rgb(var(--v-theme-success));
+}
+</style>

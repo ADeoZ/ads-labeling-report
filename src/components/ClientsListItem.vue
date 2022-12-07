@@ -31,7 +31,7 @@ export default {
 <style lang="scss" scoped>
 tr {
   &:nth-child(2n) {
-    background-color: #f3f9ff;
+    background-color: rgb(var(--v-theme-success), 0.08);
   }
   &:hover {
     background-color: #f57c0059;

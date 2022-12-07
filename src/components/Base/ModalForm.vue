@@ -6,7 +6,7 @@
     <v-dialog v-model="modal" width="800" scrollable>
       <v-toolbar v-if="modalLabel" :title="modalLabel" color="app-bars" />
       <v-card>
-        <v-card-text class="pa-0" style="height: 70vh">
+        <v-card-text class="pa-0">
           <slot :closeModal="closeModal"></slot>
         </v-card-text>
       </v-card>
@@ -43,6 +43,9 @@ export default {
 </script>
 
 <style scoped>
+.v-card-text {
+  height: 70vh;
+}
 :deep(.control-group) {
   position: sticky;
   bottom: 0;
