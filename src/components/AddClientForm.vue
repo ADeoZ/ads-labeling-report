@@ -127,7 +127,9 @@
         <v-btn color="success" class="mr-4 my-4" @click="validate"
           >Сохранить</v-btn
         >
-        <v-btn color="error" class="my-4" @click="cancel">Отмена</v-btn>
+        <v-btn color="cancel" variant="outlined" class="my-4" @click="cancel"
+          >Отмена</v-btn
+        >
       </div>
     </div>
   </v-form>
