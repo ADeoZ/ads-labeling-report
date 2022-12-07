@@ -1,10 +1,12 @@
 <template>
   <v-container class="pa-16">
     <h4 class="text-h4">Список клиентов</h4>
-    <modal-form :modal-label="'Добавить клиента'" :button-label="'Добавить'">
-      <template v-slot="{ close }">
-        <add-client-form :closeForm="close" />
-      </template>
+    <modal-form
+      :modal-label="'Добавить клиента'"
+      :button-label="'Добавить'"
+      v-slot="{ closeModal }"
+    >
+      <add-client-form :closeForm="closeModal" />
     </modal-form>
     <v-table class="mt-10">
       <thead>

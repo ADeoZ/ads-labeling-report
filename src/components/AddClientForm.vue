@@ -1,87 +1,36 @@
 <template>
-  <v-form ref="form" v-model="valid" class="px-8 py-6">
-    <v-text-field
-      v-model="login"
-      :rules="loginRules"
-      label="Логин в Яндекс.Директ"
-      variant="outlined"
-      required
-    />
-
-    <v-text-field
-      v-model="name"
-      :rules="nameRules"
-      label="Наименование организации"
-      variant="outlined"
-      required
-    />
-
-    <v-text-field
-      v-model="inn"
-      :counter="12"
-      :rules="innRules"
-      label="ИНН"
-      variant="outlined"
-      required
-    />
-
-    <v-radio-group
-      v-model="type"
-      :rules="typeRules"
-      label="Тип организации"
-      mandatory
-    >
-      <v-radio label="Юридическое лицо" value="ul" />
-      <v-radio label="Физическое лицо" value="ip" />
-    </v-radio-group>
-
-    <v-row>
-      <v-col class="py-0">
-        <v-text-field
-          v-model="contractNumber"
-          :rules="contractNumberRules"
-          label="Номер договора"
-          variant="outlined"
-          required
-        />
-      </v-col>
-      <v-col class="py-0">
-        <v-text-field
-          type="date"
-          v-model="contractDate"
-          :rules="contractDateRules"
-          label="Дата договора"
-          variant="outlined"
-          required
-        />
-      </v-col>
-    </v-row>
-
-    <v-switch v-model="isEnd" color="primary" label="Прямой рекламодатель" />
-
-    <template v-if="!isEnd">
+  <v-form ref="form" v-model="valid">
+    <div class="px-16 pt-8 pb-2">
       <v-text-field
-        v-model="endName"
-        :rules="nameRules"
-        label="Наименование организации"
+        v-model="login"
+        :rules="loginRules"
+        label="Логин в Яндекс.Директ"
         variant="outlined"
-        :required="!isEnd"
+        required
       />
 
       <v-text-field
-        v-model="endInn"
+        v-model="name"
+        :rules="nameRules"
+        label="Наименование организации"
+        variant="outlined"
+        required
+      />
+
+      <v-text-field
+        v-model="inn"
         :counter="12"
         :rules="innRules"
         label="ИНН"
         variant="outlined"
-        :required="!isEnd"
+        required
       />
 
       <v-radio-group
-        v-model="endType"
+        v-model="type"
         :rules="typeRules"
         label="Тип организации"
-        :mandatory="!isEnd"
+        mandatory
       >
         <v-radio label="Юридическое лицо" value="ul" />
         <v-radio label="Физическое лицо" value="ip" />
@@ -90,7 +39,7 @@
       <v-row>
         <v-col class="py-0">
           <v-text-field
-            v-model="endContractNumber"
+            v-model="contractNumber"
             :rules="contractNumberRules"
             label="Номер договора"
             variant="outlined"
@@ -100,7 +49,7 @@
         <v-col class="py-0">
           <v-text-field
             type="date"
-            v-model="endContractDate"
+            v-model="contractDate"
             :rules="contractDateRules"
             label="Дата договора"
             variant="outlined"
@@ -108,12 +57,70 @@
           />
         </v-col>
       </v-row>
-    </template>
 
-    <!-- <div class="w-100 d-flex justify-end">
-      <v-btn color="success" class="mr-4" @click="validate">Сохранить</v-btn>
-      <v-btn color="error" class="mr-4" @click="cancel">Отмена</v-btn>
-    </div> -->
+      <v-switch v-model="isEnd" color="primary" label="Прямой рекламодатель" />
+
+      <template v-if="!isEnd">
+        <v-text-field
+          v-model="endName"
+          :rules="nameRules"
+          label="Наименование организации"
+          variant="outlined"
+          :required="!isEnd"
+        />
+
+        <v-text-field
+          v-model="endInn"
+          :counter="12"
+          :rules="innRules"
+          label="ИНН"
+          variant="outlined"
+          :required="!isEnd"
+        />
+
+        <v-radio-group
+          v-model="endType"
+          :rules="typeRules"
+          label="Тип организации"
+          :mandatory="!isEnd"
+        >
+          <v-radio label="Юридическое лицо" value="ul" />
+          <v-radio label="Физическое лицо" value="ip" />
+        </v-radio-group>
+
+        <v-row>
+          <v-col class="py-0">
+            <v-text-field
+              v-model="endContractNumber"
+              :rules="contractNumberRules"
+              label="Номер договора"
+              variant="outlined"
+              required
+            />
+          </v-col>
+          <v-col class="py-0">
+            <v-text-field
+              type="date"
+              v-model="endContractDate"
+              :rules="contractDateRules"
+              label="Дата договора"
+              variant="outlined"
+              required
+            />
+          </v-col>
+        </v-row>
+      </template>
+    </div>
+
+    <div class="control-group bg-surface">
+      <v-divider></v-divider>
+      <div class="w-100 px-16 d-flex justify-end">
+        <v-btn color="success" class="mr-4 my-4" @click="validate"
+          >Сохранить</v-btn
+        >
+        <v-btn color="error" class="my-4" @click="cancel">Отмена</v-btn>
+      </div>
+    </div>
   </v-form>
 </template>
 
@@ -154,7 +161,7 @@ export default {
 
     endName: "",
     endInn: "",
-    endType: "",
+    endType: "ul",
     endContractNumber: "",
     endContractDate: "",
   }),
