@@ -1,10 +1,11 @@
 <template>
-  <v-app-bar color="primary" elevation="0" density="compact">
+  <v-app-bar color="primary" elevation="0">
     <v-app-bar-title>
       <v-img
+        contain
         src="@/assets/logo.png"
-        height="48"
-        class="mx-auto"
+        height="64"
+        width="230"
         alt="Helen Media Logo"
       ></v-img>
     </v-app-bar-title>
