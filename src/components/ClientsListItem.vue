@@ -1,6 +1,15 @@
 <template>
   <tr>
-    <td>{{ client.login }}</td>
+    <td>
+      <modal-form :modal-label="'Редактировать клиента'">
+        <template #button="{ openModal }">
+          <clients-list-login :login="client.login" :openForm="openModal" />
+        </template>
+        <template #default="{ closeModal }">
+          <add-client-form :closeForm="closeModal" />
+        </template>
+      </modal-form>
+    </td>
     <td>{{ client.contractor_name }}</td>
     <td>{{ translate_type }}</td>
     <td>{{ client.contractor_inn }}</td>
@@ -9,8 +18,17 @@
 </template>
 
 <script>
+import ModalForm from "@/components/Base/ModalForm.vue";
+import AddClientForm from "@/components/AddClientForm.vue";
+import ClientsListLogin from "./ClientsListLogin.vue";
+
 export default {
   name: "ClientsListItem",
+  components: {
+    ModalForm,
+    AddClientForm,
+    ClientsListLogin,
+  },
   props: {
     client: {
       type: Object,
