@@ -6,7 +6,7 @@ const state = () => ({
 
 const getters = {
   getClientById: (state) => (id) => {
-    console.log("getter", id);
+    console.log("getters", id);
     return state.all.find((client) => client.id === id);
   },
 };

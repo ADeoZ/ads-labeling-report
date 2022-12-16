@@ -1,7 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid">
     <div class="px-16 pt-8 pb-4">
-      <div>{{ getClient(this.clientId).login }}</div>
       <div v-if="!isEnd" class="mb-4">
         <span class="text-h6">Контрагент</span>
         <v-divider></v-divider>
@@ -53,11 +52,11 @@
         </v-col>
         <v-col class="py-0">
           <v-text-field
-            type="date"
             v-model="contractDate"
             :rules="contractDateRules"
             label="Дата договора"
             variant="outlined"
+            type="date"
             required
           />
         </v-col>
@@ -137,8 +136,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "AgencySettings",
 
@@ -183,10 +180,20 @@ export default {
     endContractDate: "",
   }),
 
+  created() {
+    if (this.$props.clientId) {
+      this.login = this.getClient.login;
+      this.name = this.getClient.contractor_name;
+      this.inn = this.getClient.contractor_inn;
+      this.type = this.getClient.contractor_type;
+      this.isEnd = this.getClient.contractor_is_end;
+    }
+  },
+
   computed: {
-    ...mapGetters("clients", {
-      getClient: "getClientById",
-    }),
+    getClient() {
+      return this.$store.getters["clients/getClientById"](this.clientId);
+    },
   },
 
   methods: {
