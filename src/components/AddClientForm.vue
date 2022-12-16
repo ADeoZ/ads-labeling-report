@@ -1,6 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid">
     <div class="px-16 pt-8 pb-4">
+      <div>{{ getClient(this.clientId).login }}</div>
       <div v-if="!isEnd" class="mb-4">
         <span class="text-h6">Контрагент</span>
         <v-divider></v-divider>
@@ -136,10 +137,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "AgencySettings",
 
   props: {
+    clientId: {
+      type: Number,
+    },
     closeForm: {
       type: Function,
     },
@@ -176,6 +182,12 @@ export default {
     endContractNumber: "",
     endContractDate: "",
   }),
+
+  computed: {
+    ...mapGetters("clients", {
+      getClient: "getClientById",
+    }),
+  },
 
   methods: {
     async validate() {

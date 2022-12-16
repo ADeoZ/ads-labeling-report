@@ -4,6 +4,13 @@ const state = () => ({
   all: [],
 });
 
+const getters = {
+  getClientById: (state) => (id) => {
+    console.log("getter", id);
+    return state.all.find((client) => client.id === id);
+  },
+};
+
 const actions = {
   async getAllClients({ commit }) {
     const clients = await clientsAPI.getAll();
@@ -20,6 +27,7 @@ const mutations = {
 export default {
   namespaced: true,
   state,
+  getters,
   actions,
   mutations,
 };

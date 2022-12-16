@@ -6,7 +6,7 @@
           <clients-list-login :login="client.login" :openForm="openModal" />
         </template>
         <template #default="{ closeModal }">
-          <add-client-form :closeForm="closeModal" />
+          <add-client-form :clientId="client.id" :closeForm="closeModal" />
         </template>
       </modal-form>
     </td>
@@ -20,7 +20,7 @@
 <script>
 import ModalForm from "@/components/Base/ModalForm.vue";
 import AddClientForm from "@/components/AddClientForm.vue";
-import ClientsListLogin from "./ClientsListLogin.vue";
+import ClientsListLogin from "@/components/ClientsListLogin.vue";
 
 export default {
   name: "ClientsListItem",
