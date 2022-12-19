@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" v-model="valid">
+  <v-form v-if="!deletingProcess" ref="form" v-model="valid">
     <div class="px-16 pt-8 pb-4">
       <div v-if="!client.contractor_is_end" class="mb-4">
         <span class="text-h6">Контрагент</span>
@@ -11,6 +11,7 @@
         label="Логин в Яндекс.Директ"
         variant="outlined"
         required
+        class="mb-2"
       />
 
       <v-text-field
@@ -19,6 +20,7 @@
         label="Наименование организации"
         variant="outlined"
         required
+        class="mb-2"
       />
 
       <v-text-field
@@ -28,6 +30,7 @@
         label="ИНН"
         variant="outlined"
         required
+        class="mb-2"
       />
 
       <v-radio-group
@@ -35,6 +38,7 @@
         :rules="rules.type"
         label="Тип организации"
         mandatory
+        class="mb-2"
       >
         <v-radio label="Юридическое лицо" value="ul" />
         <v-radio label="Физическое лицо" value="ip" />
@@ -80,6 +84,7 @@
           label="Наименование организации"
           variant="outlined"
           required
+          class="mb-2"
         />
 
         <v-text-field
@@ -89,6 +94,7 @@
           label="ИНН"
           variant="outlined"
           required
+          class="mb-2"
         />
 
         <v-radio-group
@@ -96,6 +102,7 @@
           :rules="rules.type"
           label="Тип организации"
           mandatory
+          class="mb-2"
         >
           <v-radio label="Юридическое лицо" value="ul" />
           <v-radio label="Физическое лицо" value="ip" />
@@ -127,16 +134,49 @@
 
     <div class="control-group">
       <v-divider></v-divider>
-      <div class="w-100 px-16 d-flex justify-end">
-        <v-btn color="success" class="mr-4 my-4" @click="validate"
-          >Сохранить</v-btn
-        >
-        <v-btn color="cancel" variant="outlined" class="my-4" @click="cancel"
-          >Отмена</v-btn
-        >
+      <div class="w-100 px-16 d-flex">
+        <div v-if="!!this.$props.clientId">
+          <v-btn color="cancel" class="my-4" @click="deleteClientStart"
+            >Удалить</v-btn
+          >
+        </div>
+        <div class="ml-auto">
+          <v-btn color="success" class="mr-4 my-4" @click="validate"
+            >Сохранить</v-btn
+          >
+          <v-btn color="cancel" variant="outlined" class="my-4" @click="cancel"
+            >Отмена</v-btn
+          >
+        </div>
       </div>
     </div>
   </v-form>
+
+  <template v-if="deletingProcess">
+    <v-alert type="warning" color="primary" class="mx-16 mt-8 mb-4">
+      Удаление клиента <strong>{{ client.login }}</strong> приведёт к потере
+      всех данных по нему.
+    </v-alert>
+    <div class="control-group">
+      <v-divider></v-divider>
+      <div class="w-100 px-16 d-flex">
+        <div>
+          <v-btn color="cancel" class="my-4" @click="deleteConfirm"
+            >Удалить</v-btn
+          >
+        </div>
+        <div class="ml-auto">
+          <v-btn
+            color="cancel"
+            variant="outlined"
+            class="my-4"
+            @click="deleteCancel"
+            >Отмена</v-btn
+          >
+        </div>
+      </div>
+    </div>
+  </template>
 </template>
 
 <script>
@@ -176,6 +216,7 @@ export default {
       contract_date: [(v) => !!v || "Дата договора обязательна для указания"],
     },
     valid: true,
+    deletingProcess: false,
   }),
 
   created() {
@@ -198,6 +239,16 @@ export default {
     },
     cancel() {
       this.$props.closeForm();
+    },
+    deleteClientStart() {
+      this.deletingProcess = true;
+    },
+    deleteConfirm() {
+      alert(`Удалили клиента ${this.client.login}!`);
+      this.$props.closeForm();
+    },
+    deleteCancel() {
+      this.deletingProcess = false;
     },
   },
 };
