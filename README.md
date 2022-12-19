@@ -1,24 +1,7 @@
 # helenlabeling
 
-## Project setup
-```
-npm install
-```
+## TODO
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Валидация всех полей (длина ИНН, дата)
+- Проверка на существование логина при POST
+- Авторизация
