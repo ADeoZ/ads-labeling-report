@@ -1,38 +1,38 @@
 <template>
   <v-form ref="form" v-model="valid">
     <div class="px-16 pt-8 pb-4">
-      <div v-if="!isEnd" class="mb-4">
+      <div v-if="!client.contractor_is_end" class="mb-4">
         <span class="text-h6">Контрагент</span>
         <v-divider></v-divider>
       </div>
       <v-text-field
-        v-model="login"
-        :rules="loginRules"
+        v-model="client.login"
+        :rules="rules.login"
         label="Логин в Яндекс.Директ"
         variant="outlined"
         required
       />
 
       <v-text-field
-        v-model="name"
-        :rules="nameRules"
+        v-model="client.contractor_name"
+        :rules="rules.name"
         label="Наименование организации"
         variant="outlined"
         required
       />
 
       <v-text-field
-        v-model="inn"
+        v-model="client.contractor_inn"
         :counter="12"
-        :rules="innRules"
+        :rules="rules.inn"
         label="ИНН"
         variant="outlined"
         required
       />
 
       <v-radio-group
-        v-model="type"
-        :rules="typeRules"
+        v-model="client.contractor_type"
+        :rules="rules.type"
         label="Тип организации"
         mandatory
       >
@@ -43,8 +43,8 @@
       <v-row>
         <v-col class="py-0">
           <v-text-field
-            v-model="contractNumber"
-            :rules="contractNumberRules"
+            v-model="client.contract_number"
+            :rules="rules.contract_number"
             label="Номер договора"
             variant="outlined"
             required
@@ -52,8 +52,8 @@
         </v-col>
         <v-col class="py-0">
           <v-text-field
-            v-model="contractDate"
-            :rules="contractDateRules"
+            v-model="client.contract_date"
+            :rules="rules.contract_date"
             label="Дата договора"
             variant="outlined"
             type="date"
@@ -62,36 +62,40 @@
         </v-col>
       </v-row>
 
-      <v-switch v-model="isEnd" color="primary" label="Прямой рекламодатель" />
+      <v-switch
+        v-model="client.contractor_is_end"
+        color="primary"
+        label="Прямой рекламодатель"
+      />
 
-      <template v-if="!isEnd">
+      <template v-if="!client.contractor_is_end">
         <div class="mb-4">
           <span class="text-h6">Конечный рекламодатель</span>
           <v-divider></v-divider>
         </div>
 
         <v-text-field
-          v-model="endName"
-          :rules="nameRules"
+          v-model="client.advertiser_name"
+          :rules="rules.name"
           label="Наименование организации"
           variant="outlined"
-          :required="!isEnd"
+          required
         />
 
         <v-text-field
-          v-model="endInn"
+          v-model="client.advertiser_inn"
           :counter="12"
-          :rules="innRules"
+          :rules="rules.inn"
           label="ИНН"
           variant="outlined"
-          :required="!isEnd"
+          required
         />
 
         <v-radio-group
-          v-model="endType"
-          :rules="typeRules"
+          v-model="client.advertiser_type"
+          :rules="rules.type"
           label="Тип организации"
-          :mandatory="!isEnd"
+          mandatory
         >
           <v-radio label="Юридическое лицо" value="ul" />
           <v-radio label="Физическое лицо" value="ip" />
@@ -100,8 +104,8 @@
         <v-row>
           <v-col class="py-0">
             <v-text-field
-              v-model="endContractNumber"
-              :rules="contractNumberRules"
+              v-model="client.advertiser_contract_number"
+              :rules="rules.contract_number"
               label="Номер договора"
               variant="outlined"
               required
@@ -110,8 +114,8 @@
           <v-col class="py-0">
             <v-text-field
               type="date"
-              v-model="endContractDate"
-              :rules="contractDateRules"
+              v-model="client.advertiser_contract_date"
+              :rules="rules.contract_date"
               label="Дата договора"
               variant="outlined"
               required
@@ -149,44 +153,34 @@ export default {
   },
 
   data: () => ({
+    client: {
+      login: "",
+      contractor_name: "",
+      contractor_inn: "",
+      contractor_type: "ul",
+      contract_number: "",
+      contract_date: "",
+      contractor_is_end: true,
+      advertiser_name: "",
+      advertiser_inn: "",
+      advertiser_type: "ul",
+      advertiser_contract_number: "",
+      advertiser_contract_date: "",
+    },
+    rules: {
+      login: [(v) => !!v || "Логин обязателен для указания"],
+      name: [(v) => !!v || "Наименование обязательно для указания"],
+      inn: [(v) => !!v || "ИНН обязателен для указания"],
+      type: [(v) => !!v || "Тип обязателен для указания"],
+      contract_number: [(v) => !!v || "Номер договора обязателен для указания"],
+      contract_date: [(v) => !!v || "Дата договора обязательна для указания"],
+    },
     valid: true,
-
-    login: "",
-    loginRules: [(v) => !!v || "Логин обязателен для указания"],
-
-    name: "",
-    nameRules: [(v) => !!v || "Наименование обязательно для указания"],
-
-    inn: "",
-    innRules: [(v) => !!v || "ИНН обязателен для указания"],
-
-    type: "ul",
-    typeRules: [(v) => !!v || "Тип обязателен для указания"],
-
-    contractNumber: "",
-    contractNumberRules: [
-      (v) => !!v || "Номер договора обязателен для указания",
-    ],
-
-    contractDate: "",
-    contractDateRules: [(v) => !!v || "Дата договора обязательна для указания"],
-
-    isEnd: true,
-
-    endName: "",
-    endInn: "",
-    endType: "ul",
-    endContractNumber: "",
-    endContractDate: "",
   }),
 
   created() {
     if (this.$props.clientId) {
-      this.login = this.getClient.login;
-      this.name = this.getClient.contractor_name;
-      this.inn = this.getClient.contractor_inn;
-      this.type = this.getClient.contractor_type;
-      this.isEnd = this.getClient.contractor_is_end;
+      Object.assign(this.client, this.getClient);
     }
   },
 
