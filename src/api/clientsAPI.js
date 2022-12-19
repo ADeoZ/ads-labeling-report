@@ -43,6 +43,10 @@ const clients = [
 
 export const clientsAPI = {
   async getAll() {
-    return clients;
+    const result = clients.map((client) => ({
+      ...client,
+      contractor_is_end: !!client.contractor_is_end,
+    }));
+    return result;
   },
 };
