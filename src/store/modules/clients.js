@@ -2,6 +2,7 @@ import { clientsAPI } from "@/api/clientsAPI";
 
 const state = () => ({
   all: [],
+  error: null,
 });
 
 const getters = {
@@ -12,14 +13,22 @@ const getters = {
 
 const actions = {
   async getAllClients({ commit }) {
-    const clients = await clientsAPI.getAll();
-    commit("setClients", clients);
+    commit("setError", null);
+    try {
+      const clients = await clientsAPI.getAll();
+      commit("setClients", clients);
+    } catch (error) {
+      commit("setError", "Ошибка получения данных");
+    }
   },
 };
 
 const mutations = {
   setClients(state, clients) {
     state.all = clients;
+  },
+  setError(state, error) {
+    state.error = error;
   },
 };
 

@@ -1,5 +1,10 @@
 <template>
-  <v-form v-if="!deletingProcess" ref="form" v-model="valid">
+  <v-form
+    v-if="!deletingProcess"
+    ref="form"
+    v-model="valid"
+    @submit.prevent="validate"
+  >
     <div class="px-16 pt-8 pb-4">
       <div v-if="!client.contractor_is_end" class="mb-4">
         <span class="text-h6">Контрагент</span>
@@ -141,12 +146,12 @@
           >
         </div>
         <div class="ml-auto">
-          <v-btn color="success" class="mr-4 my-4" @click="validate"
-            >Сохранить</v-btn
-          >
-          <v-btn color="cancel" variant="outlined" class="my-4" @click="cancel"
-            >Отмена</v-btn
-          >
+          <v-btn type="submit" color="success" class="mr-4 my-4">
+            Сохранить
+          </v-btn>
+          <v-btn color="cancel" variant="outlined" class="my-4" @click="cancel">
+            Отмена
+          </v-btn>
         </div>
       </div>
     </div>
@@ -185,7 +190,7 @@ export default {
 
   props: {
     clientId: {
-      type: Number,
+      type: String,
     },
     closeForm: {
       type: Function,
@@ -234,7 +239,7 @@ export default {
   methods: {
     async validate() {
       const { valid } = await this.$refs.form.validate();
-
+      console.log(this.client);
       if (valid) alert("Форма корректна");
     },
     cancel() {

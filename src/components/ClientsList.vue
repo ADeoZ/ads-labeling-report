@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-16">
-    <h4 class="text-h4">Список клиентов</h4>
+    <h4 class="text-h4">Список клиентов {{ error }}</h4>
     <modal-form
       :modal-label="'Добавить клиента'"
       :button-label="'Добавить'"
@@ -26,12 +26,14 @@
         />
       </tbody>
     </v-table>
+    <error-snackbar :message="error"></error-snackbar>
   </v-container>
 </template>
 
 <script>
-import ClientsListItem from "@/components/ClientsListItem.vue";
 import ModalForm from "@/components/Base/ModalForm.vue";
+import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
+import ClientsListItem from "@/components/ClientsListItem.vue";
 import AddClientForm from "@/components/AddClientForm.vue";
 import { mapState } from "vuex";
 
@@ -41,9 +43,11 @@ export default {
     ClientsListItem,
     ModalForm,
     AddClientForm,
+    ErrorSnackbar,
   },
   computed: mapState({
     clients: (state) => state.clients.all,
+    error: (state) => state.clients.error,
   }),
   created() {
     this.$store.dispatch("clients/getAllClients");
