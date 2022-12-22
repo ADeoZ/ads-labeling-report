@@ -1,6 +1,7 @@
 import axios from "axios";
+import { clearData } from "@/api/service";
 
-axios.defaults.baseURL = "http://localhost:8000/api/clients";
+axios.defaults.baseURL = `${process.env.VUE_APP_API_URL}/clients`;
 
 export const clientsAPI = {
   async getAll() {
@@ -13,6 +14,15 @@ export const clientsAPI = {
       }));
       return result;
     } catch (error) {
+      throw new Error(error);
+    }
+  },
+  async postClient(data) {
+    try {
+      const response = axios.post("/post.php", clearData(data));
+      console.log("response", response);
+    } catch (error) {
+      console.log("ошибка", error);
       throw new Error(error);
     }
   },

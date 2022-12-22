@@ -21,6 +21,14 @@ const actions = {
       commit("setError", "Ошибка получения данных");
     }
   },
+  async postClient({ commit }, data) {
+    commit("setError", null);
+    try {
+      await clientsAPI.postClient(data);
+    } catch (error) {
+      commit("setError", "Ошибка отправки данных");
+    }
+  },
 };
 
 const mutations = {

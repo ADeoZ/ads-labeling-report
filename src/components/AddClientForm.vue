@@ -3,7 +3,7 @@
     v-if="!deletingProcess"
     ref="form"
     v-model="valid"
-    @submit.prevent="validate"
+    @submit.prevent="submit"
   >
     <div class="px-16 pt-8 pb-4">
       <div v-if="!client.contractor_is_end" class="mb-4">
@@ -30,7 +30,7 @@
 
       <v-text-field
         v-model="client.contractor_inn"
-        :counter="12"
+        :counter="client.contractor_type === 'ul' ? 10 : 12"
         :rules="rules.inn"
         label="ИНН"
         variant="outlined"
@@ -94,7 +94,7 @@
 
         <v-text-field
           v-model="client.advertiser_inn"
-          :counter="12"
+          :counter="client.advertiser_type === 'ul' ? 10 : 12"
           :rules="rules.inn"
           label="ИНН"
           variant="outlined"
@@ -182,11 +182,18 @@
       </div>
     </div>
   </template>
+  {{ error }}
+  <error-snackbar :message="error" />
 </template>
 
 <script>
+import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
+
 export default {
   name: "AgencySettings",
+  components: {
+    ErrorSnackbar,
+  },
 
   props: {
     clientId: {
@@ -208,7 +215,7 @@ export default {
       contractor_is_end: true,
       advertiser_name: "",
       advertiser_inn: "",
-      advertiser_type: "ul",
+      advertiser_type: "",
       advertiser_contract_number: "",
       advertiser_contract_date: "",
     },
@@ -234,13 +241,17 @@ export default {
     getClient() {
       return this.$store.getters["clients/getClientById"](this.clientId);
     },
+    error() {
+      return this.$store.state.clients.error;
+    },
   },
 
   methods: {
-    async validate() {
+    async submit() {
       const { valid } = await this.$refs.form.validate();
-      console.log(this.client);
-      if (valid) alert("Форма корректна");
+      if (valid) {
+        this.$store.dispatch("clients/postClient", this.client);
+      }
     },
     cancel() {
       this.$props.closeForm();
