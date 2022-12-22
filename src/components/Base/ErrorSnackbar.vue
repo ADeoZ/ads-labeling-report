@@ -6,11 +6,8 @@
     elevation="24"
   >
     {{ message }}
-
     <template v-slot:actions>
-      <v-btn color="blue" variant="text" @click="snackbar = false">
-        <v-icon light color="white">mdi-close</v-icon>
-      </v-btn>
+      <v-btn icon="mdi-close" size="x-small" @click="close" />
     </template>
   </v-snackbar>
 </template>
@@ -20,14 +17,24 @@ export default {
   name: "ErrorSnackbar",
   props: {
     message: {
-      type: String,
+      type: [String, null],
       required: true,
     },
   },
   data: () => ({
-    snackbar: true,
+    snackbar: false,
     timeout: 5000,
   }),
+  methods: {
+    close() {
+      this.snackbar = false;
+    },
+  },
+  watch: {
+    message() {
+      this.snackbar = this.message ? true : false;
+    },
+  },
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-16">
-    <h4 class="text-h4">Список клиентов {{ error }}</h4>
+    <h4 class="text-h4">Список клиентов</h4>
     <modal-form
       :modal-label="'Добавить клиента'"
       :button-label="'Добавить'"
@@ -26,7 +26,7 @@
         />
       </tbody>
     </v-table>
-    <error-snackbar :message="error"></error-snackbar>
+    <error-snackbar :message="error" />
   </v-container>
 </template>
 
