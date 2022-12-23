@@ -182,7 +182,7 @@
       </div>
     </div>
   </template>
-  {{ error }}
+
   <error-snackbar :message="error" />
 </template>
 

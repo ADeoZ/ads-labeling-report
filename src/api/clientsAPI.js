@@ -16,10 +16,9 @@ export const clientsAPI = {
   },
   async postClient(data) {
     try {
-      axios.post("/post.php", data);
-      console.log("response!!!");
+      const response = axios.post("/post.php", data);
+      return response;
     } catch (error) {
-      console.log("ошибка!!!");
       throw new Error(error);
     }
   },
