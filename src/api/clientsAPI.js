@@ -1,28 +1,25 @@
 import axios from "axios";
-import { clearData } from "@/api/service";
+import { mapContractorIsEnd } from "@/api/service";
 
 axios.defaults.baseURL = `${process.env.VUE_APP_API_URL}/clients`;
 
 export const clientsAPI = {
   async getAll() {
     try {
-      const response = await axios.get("/get.php");
-      const { clients } = response.data;
-      const result = clients.map((client) => ({
-        ...client,
-        contractor_is_end: !!client.contractor_is_end,
-      }));
-      return result;
+      const response = await axios.get("/get.php", {
+        transformResponse: [JSON.parse, mapContractorIsEnd],
+      });
+      return response.data;
     } catch (error) {
       throw new Error(error);
     }
   },
   async postClient(data) {
     try {
-      const response = axios.post("/post.php", clearData(data));
-      console.log("response", response);
+      axios.post("/post.php", data);
+      console.log("response!!!");
     } catch (error) {
-      console.log("ошибка", error);
+      console.log("ошибка!!!");
       throw new Error(error);
     }
   },

@@ -215,7 +215,7 @@ export default {
       contractor_is_end: true,
       advertiser_name: "",
       advertiser_inn: "",
-      advertiser_type: "",
+      advertiser_type: "ul",
       advertiser_contract_number: "",
       advertiser_contract_date: "",
     },

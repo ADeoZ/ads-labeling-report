@@ -1,8 +1,6 @@
-export const clearData = (data) => {
-  const result = {};
-  Object.assign(result, data);
-  Object.keys(result).forEach((key) => {
-    result[key] === "" && delete result[key];
-  });
-  return result;
+export const mapContractorIsEnd = (data) => {
+  return data.clients.map((client) => ({
+    ...client,
+    contractor_is_end: !!parseInt(client.contractor_is_end, 10),
+  }));
 };
