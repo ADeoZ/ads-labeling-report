@@ -244,6 +244,9 @@ export default {
     error() {
       return this.$store.state.clients.error;
     },
+    status() {
+      return this.$store.state.clients.status;
+    },
   },
 
   methods: {
@@ -265,6 +268,12 @@ export default {
     },
     deleteCancel() {
       this.deletingProcess = false;
+    },
+  },
+
+  watch: {
+    status() {
+      if (this.status === "success") this.$props.closeForm();
     },
   },
 };
