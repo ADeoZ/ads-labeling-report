@@ -22,4 +22,22 @@ export const clientsAPI = {
       throw new Error(error);
     }
   },
+  async putClient(data) {
+    try {
+      const response = axios.put("/put.php", data);
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  async deleteClient(id) {
+    try {
+      const response = axios.delete("/delete.php", {
+        params: { id },
+      });
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
 };

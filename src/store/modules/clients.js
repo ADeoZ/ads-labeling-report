@@ -37,6 +37,30 @@ const actions = {
       commit("setStatus", "fail");
     }
   },
+  async editClient({ commit, dispatch }, data) {
+    commit("setError", null);
+    commit("setStatus", "loading");
+    try {
+      await clientsAPI.putClient(data);
+      commit("setStatus", "success");
+      await dispatch("getAllClients");
+    } catch (error) {
+      commit("setError", "Ошибка отправки данных");
+      commit("setStatus", "fail");
+    }
+  },
+  async deleteClient({ commit, dispatch }, id) {
+    commit("setError", null);
+    commit("setStatus", "loading");
+    try {
+      await clientsAPI.deleteClient(id);
+      commit("setStatus", "success");
+      await dispatch("getAllClients");
+    } catch (error) {
+      commit("setError", "Ошибка отправки данных");
+      commit("setStatus", "fail");
+    }
+  },
 };
 
 const mutations = {

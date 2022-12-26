@@ -253,7 +253,12 @@ export default {
     async submit() {
       const { valid } = await this.$refs.form.validate();
       if (valid) {
-        this.$store.dispatch("clients/postClient", this.client);
+        if (this.$props.clientId) {
+          const id = this.$props.clientId;
+          this.$store.dispatch("clients/editClient", { id, ...this.client });
+        } else {
+          this.$store.dispatch("clients/postClient", this.client);
+        }
       }
     },
     cancel() {
@@ -263,8 +268,7 @@ export default {
       this.deletingProcess = true;
     },
     deleteConfirm() {
-      alert(`Удалили клиента ${this.client.login}!`);
-      this.$props.closeForm();
+      this.$store.dispatch("clients/deleteClient", this.$props.clientId);
     },
     deleteCancel() {
       this.deletingProcess = false;
