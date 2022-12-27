@@ -7,6 +7,7 @@
   >
     <v-form ref="form" v-model="valid" class="pa-8">
       <v-file-input
+        v-model="report"
         variant="outlined"
         :rules="fileRules"
         label="Загрузите файл Яндекса"
@@ -20,15 +21,24 @@
       </div>
     </v-form>
   </v-card>
+
+  <error-snackbar :message="error" />
 </template>
 
 <script>
+import { reportAPI } from "@/api/reportAPI";
+import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
+
 export default {
   name: "CreateReport",
 
-  data: () => ({
-    valid: true,
+  components: {
+    ErrorSnackbar,
+  },
 
+  data: () => ({
+    report: [],
+    valid: true,
     fileRules: [
       (v) => {
         if (!v || !v.length) return "Файл обязателен для загрузки";
@@ -36,16 +46,24 @@ export default {
         return true;
       },
     ],
+    error: null,
   }),
 
   methods: {
     async validate() {
       const { valid } = await this.$refs.form.validate();
 
-      if (valid) alert("Форма корректна");
-    },
-    reset() {
-      this.$refs.form.reset();
+      if (valid) {
+        const formData = new FormData();
+        formData.append("file", this.report[0]);
+        try {
+          this.error = null;
+          const response = await reportAPI.postFile(formData);
+          console.log("response", response);
+        } catch (error) {
+          this.error = "Ошибка отправки данных";
+        }
+      }
     },
   },
 };
