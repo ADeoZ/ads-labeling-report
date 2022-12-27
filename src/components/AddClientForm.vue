@@ -191,6 +191,7 @@ import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
 
 export default {
   name: "AgencySettings",
+
   components: {
     ErrorSnackbar,
   },

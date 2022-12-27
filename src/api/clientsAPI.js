@@ -1,12 +1,11 @@
 import axios from "axios";
+import * as path from "@/api/common";
 import { mapContractorIsEnd } from "@/api/service";
-
-axios.defaults.baseURL = `${process.env.VUE_APP_API_URL}/clients`;
 
 export const clientsAPI = {
   async getAll() {
     try {
-      const response = await axios.get("/get.php", {
+      const response = await axios.get(`${path.clients}/get.php`, {
         transformResponse: [JSON.parse, mapContractorIsEnd],
       });
       return response.data;
@@ -16,7 +15,7 @@ export const clientsAPI = {
   },
   async postClient(data) {
     try {
-      const response = axios.post("/post.php", data);
+      const response = axios.post(`${path.clients}/post.php`, data);
       return response;
     } catch (error) {
       throw new Error(error);
@@ -24,7 +23,7 @@ export const clientsAPI = {
   },
   async putClient(data) {
     try {
-      const response = axios.put("/put.php", data);
+      const response = axios.put(`${path.clients}/put.php`, data);
       return response;
     } catch (error) {
       throw new Error(error);
@@ -32,7 +31,7 @@ export const clientsAPI = {
   },
   async deleteClient(id) {
     try {
-      const response = axios.delete("/delete.php", {
+      const response = axios.delete(`${path.clients}/delete.php`, {
         params: { id },
       });
       return response;

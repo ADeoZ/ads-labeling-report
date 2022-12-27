@@ -5,27 +5,33 @@
     variant="outlined"
     class="mx-auto my-12 pa-6 rounded-lg"
   >
-    <v-form ref="form" v-model="valid" class="pa-8" :disabled="!editMode">
+    <v-form
+      class="pa-8"
+      ref="form"
+      v-model="valid"
+      @submit.prevent="submit"
+      :disabled="!editMode"
+    >
       <v-text-field
-        v-model="name"
-        :rules="nameRules"
+        v-model="agency.name"
+        :rules="rules.name"
         label="Наименование организации"
         variant="outlined"
         required
       />
 
       <v-text-field
-        v-model="inn"
-        :counter="12"
-        :rules="innRules"
+        v-model="agency.inn"
+        :counter="agency.type === 'ul' ? 10 : 12"
+        :rules="rules.inn"
         label="ИНН"
         variant="outlined"
         required
       />
 
       <v-radio-group
-        v-model="type"
-        :rules="typeRules"
+        v-model="agency.type"
+        :rules="rules.type"
         label="Тип организации"
         mandatory
       >
@@ -39,7 +45,7 @@
         >
       </div>
       <div v-else class="w-100 d-flex justify-end">
-        <v-btn color="success" class="mr-4" @click="validate">Сохранить</v-btn>
+        <v-btn type="submit" color="success" class="mr-4">Сохранить</v-btn>
         <v-btn
           color="cancel"
           variant="outlined"
@@ -50,39 +56,70 @@
       </div>
     </v-form>
   </v-card>
+
+  <error-snackbar :message="error" />
 </template>
 
 <script>
+import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
+
 export default {
   name: "AgencySettings",
 
+  components: {
+    ErrorSnackbar,
+  },
+
   data: () => ({
-    editMode: false,
-
+    agency: {
+      name: "",
+      type: "",
+      inn: "",
+    },
+    rules: {
+      name: [(v) => !!v || "Наименование обязательно для указания"],
+      type: [(v) => !!v || "Тип обязателен для указания"],
+      inn: [(v) => !!v || "ИНН обязателен для указания"],
+    },
     valid: true,
-
-    name: "ООО «Медиаотдел»",
-    nameRules: [(v) => !!v || "Наименование обязательно для указания"],
-
-    inn: "7708757496",
-    innRules: [(v) => !!v || "ИНН обязателен для указания"],
-
-    type: "ul",
-    typeRules: [(v) => !!v || "Тип обязателен для указания"],
+    cachedData: {},
+    editMode: false,
   }),
+
+  async created() {
+    await this.$store.dispatch("agency/getAgencyData");
+    Object.assign(this.agency, this.$store.state.agency.data);
+  },
+
+  computed: {
+    error() {
+      return this.$store.state.agency.error;
+    },
+    status() {
+      return this.$store.state.agency.status;
+    },
+  },
 
   methods: {
     enterEditMode() {
       this.editMode = true;
+      Object.assign(this.cachedData, this.agency);
     },
     cancelEditMode() {
       this.editMode = false;
+      Object.assign(this.agency, this.cachedData);
     },
-    async validate() {
+    async submit() {
       const { valid } = await this.$refs.form.validate();
-
-      if (valid) alert("Форма корректна");
-      this.cancelEditMode();
+      if (valid) {
+        await this.$store.dispatch("agency/editAgency", {
+          id: 1,
+          ...this.agency,
+        });
+        if (this.status === "success") {
+          this.editMode = false;
+        }
+      }
     },
   },
 };
