@@ -10,6 +10,7 @@
         v-model="report"
         variant="outlined"
         :rules="fileRules"
+        accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         label="Загрузите файл Яндекса"
         show-size
         required
