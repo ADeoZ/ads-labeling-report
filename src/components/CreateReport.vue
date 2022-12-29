@@ -29,6 +29,7 @@
 <script>
 import { reportAPI } from "@/api/reportAPI";
 import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
+import FileSaver from "file-saver";
 
 export default {
   name: "CreateReport",
@@ -43,7 +44,7 @@ export default {
     fileRules: [
       (v) => {
         if (!v || !v.length) return "Файл обязателен для загрузки";
-        if (v[0].size > 3000000) return "Размер файла превышает 3Мб";
+        if (v[0].size > 1048576) return "Размер файла превышает 1Мб";
         return true;
       },
     ],
@@ -60,7 +61,7 @@ export default {
         try {
           this.error = null;
           const response = await reportAPI.postFile(formData);
-          console.log("response", response);
+          FileSaver.saveAs(response.data, "Report.xlsx");
         } catch (error) {
           this.error = "Ошибка отправки данных";
         }

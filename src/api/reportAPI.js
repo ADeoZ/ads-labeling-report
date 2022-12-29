@@ -8,6 +8,7 @@ export const reportAPI = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        responseType: "blob",
       });
       return response;
     } catch (error) {
