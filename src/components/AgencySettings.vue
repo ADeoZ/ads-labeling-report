@@ -23,7 +23,10 @@
       <v-text-field
         v-model="agency.inn"
         :counter="agency.type === 'ul' ? 10 : 12"
-        :rules="rules.inn"
+        :rules="[
+          ...rules.inn,
+          ...(agency.type === 'ul' ? rules.entityInn : rules.individualInn),
+        ]"
         label="ИНН"
         variant="outlined"
         required
@@ -62,6 +65,7 @@
 
 <script>
 import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
+import { rules } from "@/utils/rules";
 
 export default {
   name: "AgencySettings",
@@ -76,11 +80,7 @@ export default {
       type: "",
       inn: "",
     },
-    rules: {
-      name: [(v) => !!v || "Наименование обязательно для указания"],
-      type: [(v) => !!v || "Тип обязателен для указания"],
-      inn: [(v) => !!v || "ИНН обязателен для указания"],
-    },
+    rules,
     valid: true,
     cachedData: {},
     editMode: false,

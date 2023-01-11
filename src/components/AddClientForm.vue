@@ -31,7 +31,12 @@
       <v-text-field
         v-model="client.contractor_inn"
         :counter="client.contractor_type === 'ul' ? 10 : 12"
-        :rules="rules.inn"
+        :rules="[
+          ...rules.inn,
+          ...(client.contractor_type === 'ul'
+            ? rules.entityInn
+            : rules.individualInn),
+        ]"
         label="ИНН"
         variant="outlined"
         required
@@ -95,7 +100,12 @@
         <v-text-field
           v-model="client.advertiser_inn"
           :counter="client.advertiser_type === 'ul' ? 10 : 12"
-          :rules="rules.inn"
+          :rules="[
+            ...rules.inn,
+            ...(client.advertiser_type === 'ul'
+              ? rules.entityInn
+              : rules.individualInn),
+          ]"
           label="ИНН"
           variant="outlined"
           required
@@ -188,6 +198,7 @@
 
 <script>
 import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
+import { rules } from "@/utils/rules";
 
 export default {
   name: "AgencySettings",
@@ -220,14 +231,7 @@ export default {
       advertiser_contract_number: "",
       advertiser_contract_date: "",
     },
-    rules: {
-      login: [(v) => !!v || "Логин обязателен для указания"],
-      name: [(v) => !!v || "Наименование обязательно для указания"],
-      inn: [(v) => !!v || "ИНН обязателен для указания"],
-      type: [(v) => !!v || "Тип обязателен для указания"],
-      contract_number: [(v) => !!v || "Номер договора обязателен для указания"],
-      contract_date: [(v) => !!v || "Дата договора обязательна для указания"],
-    },
+    rules,
     valid: true,
     deletingProcess: false,
   }),
