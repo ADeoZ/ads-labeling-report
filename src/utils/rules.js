@@ -10,7 +10,10 @@ export const rules = {
   individualInn: [(v) => v.length === 12 || "Длина ИНН физлица — 12 символов"],
   type: [(v) => !!v || "Тип обязателен для указания"],
   contract_number: [(v) => !!v || "Номер договора обязателен для указания"],
-  contract_date: [(v) => !!v || "Дата договора обязательна для указания"],
+  contract_date: [
+    (v) => !!v || "Дата договора обязательна для указания",
+    (v) => checkDate(v) || "Дата введена некорректно",
+  ],
 };
 
 const checkInnSum = (inn) => {
@@ -41,4 +44,9 @@ const checkInnSum = (inn) => {
       return false;
   }
   return false;
+};
+
+const checkDate = (date) => {
+  const dateInstance = new Date(date);
+  return dateInstance instanceof Date && !isNaN(dateInstance);
 };
