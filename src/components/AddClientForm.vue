@@ -12,7 +12,7 @@
       </div>
       <v-text-field
         v-model="client.login"
-        :rules="rules.login"
+        :rules="[...rules.login, ...checkLoginExist]"
         label="Логин в Яндекс.Директ"
         variant="outlined"
         required
@@ -251,6 +251,12 @@ export default {
     },
     status() {
       return this.$store.state.clients.status;
+    },
+    checkLoginExist() {
+      const hasLogin = this.$store.getters["clients/checkClientExist"];
+      return [
+        (v) => !hasLogin(v, this.clientId) || "Такой логин уже существует",
+      ];
     },
   },
 

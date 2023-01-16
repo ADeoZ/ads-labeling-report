@@ -10,6 +10,13 @@ const getters = {
   getClientById: (state) => (id) => {
     return state.all.find((client) => client.id === id);
   },
+  checkClientExist: (state) => (login, id) => {
+    return state.all.some(
+      (client) =>
+        client.login.toLowerCase() === login.trim().toLowerCase() &&
+        client.id !== id
+    );
+  },
 };
 
 const actions = {
