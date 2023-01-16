@@ -20,7 +20,7 @@
       </thead>
       <tbody>
         <clients-list-item
-          v-for="client in clients"
+          v-for="client in sortedClients"
           :client="client"
           :key="client.id"
         />
@@ -45,10 +45,29 @@ export default {
     AddClientForm,
     ErrorSnackbar,
   },
-  computed: mapState({
-    clients: (state) => state.clients.all,
-    error: (state) => state.clients.error,
+  data: () => ({
+    sortColumn: "login",
+    sortOrder: "ASC",
   }),
+  computed: {
+    ...mapState({
+      clients: (state) => state.clients.all,
+      error: (state) => state.clients.error,
+    }),
+    sortedClients() {
+      const order = this.sortOrder === "ASC" ? 1 : -1;
+      const compare = {
+        login: (a, b) => a.login.localeCompare(b.login) * order,
+        name: (a, b) =>
+          a.contractor_name.localeCompare(b.contractor_name) * order,
+        type: (a, b) =>
+          a.contractor_type.localeCompare(b.contractor_type) * order,
+        is_end: (a, b) => (b.contractor_is_end - a.contractor_is_end) * order,
+      };
+      const copyClients = [...this.clients];
+      return copyClients.sort(compare[this.sortColumn]);
+    },
+  },
   created() {
     this.$store.dispatch("clients/getAllClients");
   },
