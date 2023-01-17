@@ -11,11 +11,14 @@
     <v-table class="mt-10">
       <thead>
         <tr>
-          <th class="text-left text-subtitle-1">Логин</th>
-          <th class="text-left text-subtitle-1">Наименование</th>
-          <th class="text-left text-subtitle-1">Тип</th>
-          <th class="text-left text-subtitle-1">ИНН</th>
-          <th class="text-left text-subtitle-1">Прямой</th>
+          <clients-list-headers
+            v-for="header in listHeaders"
+            :label="header.label"
+            :sortable="header.sortable"
+            :icon="sortColumn === header.name ? sortOrder : null"
+            @clickHeader="selectSort(header.name)"
+            :key="header.name"
+          />
         </tr>
       </thead>
       <tbody>
@@ -34,20 +37,29 @@
 import ModalForm from "@/components/Base/ModalForm.vue";
 import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
 import ClientsListItem from "@/components/ClientsListItem.vue";
+import ClientsListHeaders from "@/components/ClientsListHeaders.vue";
 import AddClientForm from "@/components/AddClientForm.vue";
 import { mapState } from "vuex";
 
 export default {
   name: "ClientsList",
   components: {
+    ClientsListHeaders,
     ClientsListItem,
     ModalForm,
     AddClientForm,
     ErrorSnackbar,
   },
   data: () => ({
+    listHeaders: [
+      { name: "login", label: "Логин", sortable: true },
+      { name: "name", label: "Наименование", sortable: true },
+      { name: "type", label: "Тип", sortable: true },
+      { name: "inn", label: "ИНН", sortable: false },
+      { name: "is_end", label: "Прямой", sortable: true },
+    ],
     sortColumn: "login",
-    sortOrder: "ASC",
+    sortOrder: 1,
   }),
   computed: {
     ...mapState({
@@ -55,21 +67,29 @@ export default {
       error: (state) => state.clients.error,
     }),
     sortedClients() {
-      const order = this.sortOrder === "ASC" ? 1 : -1;
       const compare = {
-        login: (a, b) => a.login.localeCompare(b.login) * order,
+        login: (a, b) => a.login.localeCompare(b.login) * this.sortOrder,
         name: (a, b) =>
-          a.contractor_name.localeCompare(b.contractor_name) * order,
+          a.contractor_name.localeCompare(b.contractor_name) * this.sortOrder,
         type: (a, b) =>
-          a.contractor_type.localeCompare(b.contractor_type) * order,
-        is_end: (a, b) => (b.contractor_is_end - a.contractor_is_end) * order,
+          a.contractor_type.localeCompare(b.contractor_type) * this.sortOrder,
+        is_end: (a, b) =>
+          (b.contractor_is_end - a.contractor_is_end) * this.sortOrder,
       };
-      const copyClients = [...this.clients];
-      return copyClients.sort(compare[this.sortColumn]);
+      return [...this.clients].sort(compare[this.sortColumn]);
     },
   },
   created() {
     this.$store.dispatch("clients/getAllClients");
+  },
+  methods: {
+    selectSort(type) {
+      if (this.sortColumn === type) {
+        this.sortOrder *= -1;
+      } else {
+        this.sortColumn = type;
+      }
+    },
   },
 };
 </script>
