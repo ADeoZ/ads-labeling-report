@@ -23,12 +23,20 @@
       </thead>
       <tbody>
         <clients-list-item
-          v-for="client in sortedClients"
+          v-for="client in pagedClients"
           :client="client"
           :key="client.id"
         />
       </tbody>
     </v-table>
+    <div class="mt-6 text-center" v-if="this.clients.length">
+      <v-pagination
+        v-model="page"
+        :length="totalPages"
+        total-visible="10"
+        rounded="circle"
+      />
+    </div>
     <error-snackbar :message="error" />
   </v-container>
 </template>
@@ -60,6 +68,8 @@ export default {
     ],
     sortColumn: "login",
     sortOrder: 1,
+    page: 1,
+    limit: 10,
   }),
   computed: {
     ...mapState({
@@ -77,6 +87,13 @@ export default {
           (b.contractor_is_end - a.contractor_is_end) * this.sortOrder,
       };
       return [...this.clients].sort(compare[this.sortColumn]);
+    },
+    pagedClients() {
+      const offset = this.limit * this.page;
+      return this.sortedClients.slice(offset - this.limit, offset);
+    },
+    totalPages() {
+      return Math.ceil(this.clients.length / this.limit);
     },
   },
   created() {

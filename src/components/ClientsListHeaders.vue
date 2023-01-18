@@ -6,7 +6,6 @@
       :disabled="!sortable"
       :append-icon="selectIcon"
       @click="emitEvent"
-      min-width="125"
       class="px-4 justify-start text-subtitle-1"
     >
       {{ label }}
