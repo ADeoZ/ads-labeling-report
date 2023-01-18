@@ -8,7 +8,7 @@
     >
       <add-client-form :closeForm="closeModal" />
     </modal-form>
-    <v-table class="mt-10">
+    <v-table class="mt-10" v-if="clients.length">
       <thead>
         <tr>
           <clients-list-headers
@@ -37,6 +37,15 @@
         rounded="circle"
       />
     </div>
+    <v-alert
+      class="mt-6 text-center"
+      variant="outlined"
+      type="warning"
+      icon="mdi-emoticon-sad-outline"
+      v-if="!this.clients.length"
+    >
+      Список клиентов пуст.
+    </v-alert>
     <error-snackbar :message="error" />
   </v-container>
 </template>
