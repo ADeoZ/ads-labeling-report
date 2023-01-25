@@ -1,14 +1,29 @@
 <template>
   <v-container class="pa-16">
     <h4 class="text-h4">Список клиентов</h4>
-    <modal-form
-      :modal-label="'Добавить клиента'"
-      :button-label="'Добавить'"
-      v-slot="{ closeModal }"
-    >
-      <add-client-form :closeForm="closeModal" />
-    </modal-form>
-    <v-table class="mt-10" v-if="clients.length">
+    <div class="mt-8 d-flex justify-space-between">
+      <v-responsive max-width="300" class="pt-2 d-flex align-center">
+        <v-text-field
+          v-model="searchQuery"
+          label="Поиск"
+          variant="outlined"
+          density="compact"
+          hint="Введите логин или наименование"
+          clearable
+        />
+      </v-responsive>
+      <div class="pt-2">
+        <modal-form
+          :modal-label="'Добавить клиента'"
+          :button-label="'Добавить'"
+          v-slot="{ closeModal }"
+        >
+          <add-client-form :closeForm="closeModal" />
+        </modal-form>
+      </div>
+    </div>
+
+    <v-table v-if="clients.length">
       <thead>
         <tr>
           <clients-list-headers
@@ -29,6 +44,15 @@
         />
       </tbody>
     </v-table>
+    <v-alert
+      class="mt-6 text-center"
+      variant="outlined"
+      type="warning"
+      icon="mdi-emoticon-sad-outline"
+      v-if="!this.filteredClients.length"
+    >
+      Список клиентов пуст.
+    </v-alert>
     <div class="mt-6 text-center" v-if="this.clients.length">
       <v-pagination
         v-model="page"
@@ -37,15 +61,6 @@
         rounded="circle"
       />
     </div>
-    <v-alert
-      class="mt-6 text-center"
-      variant="outlined"
-      type="warning"
-      icon="mdi-emoticon-sad-outline"
-      v-if="!this.clients.length"
-    >
-      Список клиентов пуст.
-    </v-alert>
     <error-snackbar :message="error" />
   </v-container>
 </template>
@@ -75,6 +90,7 @@ export default {
       { name: "inn", label: "ИНН", sortable: false },
       { name: "is_end", label: "Прямой", sortable: true },
     ],
+    searchQuery: "",
     sortColumn: "login",
     sortOrder: 1,
     page: 1,
@@ -85,6 +101,16 @@ export default {
       clients: (state) => state.clients.all,
       error: (state) => state.clients.error,
     }),
+    filteredClients() {
+      return this.clients.filter(
+        (client) =>
+          this.searchQuery == null ||
+          client.login.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          client.contractor_name
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase())
+      );
+    },
     sortedClients() {
       const compare = {
         login: (a, b) => a.login.localeCompare(b.login) * this.sortOrder,
@@ -95,14 +121,14 @@ export default {
         is_end: (a, b) =>
           (b.contractor_is_end - a.contractor_is_end) * this.sortOrder,
       };
-      return [...this.clients].sort(compare[this.sortColumn]);
+      return [...this.filteredClients].sort(compare[this.sortColumn]);
     },
     pagedClients() {
       const offset = this.limit * this.page;
       return this.sortedClients.slice(offset - this.limit, offset);
     },
     totalPages() {
-      return Math.ceil(this.clients.length / this.limit);
+      return Math.ceil(this.filteredClients.length / this.limit);
     },
   },
   created() {

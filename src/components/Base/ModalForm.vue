@@ -1,11 +1,5 @@
 <template>
-  <v-btn
-    v-if="buttonLabel"
-    color="primary"
-    size="small"
-    class="mt-6"
-    @click="openModal"
-  >
+  <v-btn v-if="buttonLabel" color="primary" @click="openModal">
     {{ buttonLabel }}
   </v-btn>
   <slot v-else name="button" :openModal="openModal"></slot>
