@@ -9,11 +9,19 @@
         alt="Helen Media Logo"
       ></v-img>
     </v-app-bar-title>
+
+    <logout-button />
   </v-app-bar>
 </template>
 
 <script>
+import LogoutButton from "@/components/Base/LogoutButton.vue";
+
 export default {
   name: "TheHeader",
+
+  components: {
+    LogoutButton,
+  },
 };
 </script>
