@@ -12,6 +12,7 @@ const actions = {
   async login({ commit }, data) {
     try {
       const token = await authAPI.login(data);
+      authAPI.setCommonToken(token.jwt);
       saveToken(token.jwt);
       commit("setToken", token.jwt);
       commit("setStatus", true);
@@ -21,6 +22,7 @@ const actions = {
     }
   },
   logout({ commit }) {
+    authAPI.clearCommonToken();
     removeToken();
     commit("setToken", null);
     commit("setStatus", false);

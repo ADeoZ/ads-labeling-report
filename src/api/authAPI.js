@@ -10,4 +10,10 @@ export const authAPI = {
       throw new Error(error);
     }
   },
+  setCommonToken(token) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  },
+  clearCommonToken() {
+    delete axios.defaults.headers.common["Authorization"];
+  },
 };
