@@ -10,7 +10,7 @@
       ></v-img>
     </v-app-bar-title>
 
-    <logout-button />
+    <logout-button v-if="isLogged" />
   </v-app-bar>
 </template>
 
@@ -19,9 +19,13 @@ import LogoutButton from "@/components/Base/LogoutButton.vue";
 
 export default {
   name: "TheHeader",
-
   components: {
     LogoutButton,
+  },
+  computed: {
+    isLogged() {
+      return this.$store.state.auth.loggedStatus;
+    },
   },
 };
 </script>

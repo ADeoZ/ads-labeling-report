@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <the-header />
-    <the-menu />
+    <the-menu v-if="isLogged" />
     <v-main>
       <v-container>
         <v-card class="rounded-0 mt-8" elevation="7">
@@ -24,6 +24,11 @@ export default {
     TheFooter,
     TheMenu,
     TheHeader,
+  },
+  computed: {
+    isLogged() {
+      return this.$store.state.auth.loggedStatus;
+    },
   },
 };
 </script>
