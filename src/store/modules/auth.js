@@ -6,10 +6,12 @@ const initialToken = getToken();
 const state = () => ({
   token: initialToken,
   loggedStatus: Boolean(initialToken),
+  error: null,
 });
 
 const actions = {
   async login({ commit }, data) {
+    commit("setError", null);
     try {
       const token = await authAPI.login(data);
       authAPI.setCommonToken(token.jwt);
@@ -19,6 +21,7 @@ const actions = {
     } catch (error) {
       commit("setToken", null);
       commit("setStatus", false);
+      commit("setError", "Ошибка авторизации");
     }
   },
   logout({ commit }) {
@@ -35,6 +38,9 @@ const mutations = {
   },
   setStatus(state, status) {
     state.status = status;
+  },
+  setError(state, error) {
+    state.error = error;
   },
 };
 
