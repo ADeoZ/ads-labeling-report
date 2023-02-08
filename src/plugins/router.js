@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-import AgencySettings from "@/components/AgencySettings.vue";
-import ClientsList from "@/components/ClientsList.vue";
-import CreateReport from "@/components/CreateReport.vue";
 import TheLogin from "@/components/Base/TheLogin";
 import The404Page from "@/components/Base/The404Page";
+const ClientsList = () => import("@/components/ClientsList.vue");
+const AgencySettings = () => import("@/components/AgencySettings.vue");
+const CreateReport = () => import("@/components/CreateReport.vue");
 
 const routes = [
   { path: "/", name: "list", component: ClientsList },
