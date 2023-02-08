@@ -2,6 +2,7 @@ import { authAPI } from "@/api/authAPI";
 import { getToken, removeToken, saveToken } from "@/utils/token";
 
 const initialToken = getToken();
+if (initialToken) authAPI.setCommonToken(initialToken);
 
 const state = () => ({
   token: initialToken,
@@ -37,7 +38,7 @@ const mutations = {
     state.token = data;
   },
   setStatus(state, status) {
-    state.status = status;
+    state.loggedStatus = status;
   },
   setError(state, error) {
     state.error = error;

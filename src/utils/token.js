@@ -5,7 +5,7 @@ export const saveToken = (token) => {
 };
 
 export const getToken = () => {
-  return localStorage.getItem(STORAGE_NAME);
+  return JSON.parse(localStorage.getItem(STORAGE_NAME));
 };
 
 export const removeToken = () => {
