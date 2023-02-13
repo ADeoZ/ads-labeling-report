@@ -17,6 +17,7 @@
 <script>
 export default {
   name: "ModalContainer",
+
   props: {
     modalLabel: {
       type: String,
@@ -25,11 +26,13 @@ export default {
       type: String,
     },
   },
+
   data() {
     return {
       modal: false,
     };
   },
+
   methods: {
     openModal() {
       this.modal = true;

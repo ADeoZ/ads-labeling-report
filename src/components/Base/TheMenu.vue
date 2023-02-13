@@ -19,6 +19,7 @@
 <script>
 export default {
   name: "TheMenu",
+
   data: () => ({
     links: [
       { name: "Клиенты", path: { name: "list" } },

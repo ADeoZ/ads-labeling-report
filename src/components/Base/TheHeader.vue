@@ -15,13 +15,15 @@
 </template>
 
 <script>
-import LogoutButton from "@/components/Base/LogoutButton.vue";
+import LogoutButton from "@/components/base/LogoutButton.vue";
 
 export default {
   name: "TheHeader",
+
   components: {
     LogoutButton,
   },
+
   computed: {
     isLogged() {
       return this.$store.state.auth.loggedStatus;

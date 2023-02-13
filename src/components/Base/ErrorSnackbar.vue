@@ -15,21 +15,25 @@
 <script>
 export default {
   name: "ErrorSnackbar",
+
   props: {
     message: {
       type: [String, null],
       required: true,
     },
   },
+
   data: () => ({
     snackbar: false,
     timeout: 5000,
   }),
+
   methods: {
     close() {
       this.snackbar = false;
     },
   },
+
   watch: {
     message() {
       this.snackbar = this.message ? true : false;

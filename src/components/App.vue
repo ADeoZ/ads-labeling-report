@@ -14,17 +14,19 @@
 </template>
 
 <script>
-import TheFooter from "@/components/Base/TheFooter.vue";
-import TheHeader from "@/components/Base/TheHeader.vue";
-import TheMenu from "@/components/Base/TheMenu.vue";
+import TheFooter from "@/components/base/TheFooter.vue";
+import TheHeader from "@/components/base/TheHeader.vue";
+import TheMenu from "@/components/base/TheMenu.vue";
 
 export default {
   name: "App",
+
   components: {
     TheFooter,
     TheMenu,
     TheHeader,
   },
+
   computed: {
     isLogged() {
       return this.$store.state.auth.loggedStatus;

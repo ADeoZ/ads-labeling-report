@@ -1,19 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "@/store";
-import TheLogin from "@/components/Base/TheLogin";
-import The404Page from "@/components/Base/The404Page";
-const ClientsList = () => import("@/components/ClientsList.vue");
-const AgencySettings = () => import("@/components/AgencySettings.vue");
-const CreateReport = () => import("@/components/CreateReport.vue");
+import TheLogin from "@/components/Login/TheLogin";
+import Page404 from "@/components/404/Page404";
+const ClientsList = () => import("@/components/Clients/ClientsList.vue");
+const AgencySettings = () => import("@/components/Agency/AgencySettings.vue");
+const CreateReport = () => import("@/components/Report/CreateReport.vue");
 
 const routes = [
+  { path: "/login", name: "login", component: TheLogin },
   {
     path: "/",
     name: "list",
     component: ClientsList,
     meta: { requiresAuth: true },
   },
-  { path: "/login", name: "login", component: TheLogin },
   {
     path: "/report",
     name: "report",
@@ -26,7 +26,7 @@ const routes = [
     component: AgencySettings,
     meta: { requiresAuth: true },
   },
-  { path: "/:pathMatch(.*)*", name: "404", component: The404Page },
+  { path: "/:pathMatch(.*)*", name: "404", component: Page404 },
 ];
 
 const router = createRouter({

@@ -28,7 +28,7 @@
 
 <script>
 import { reportAPI } from "@/api/reportAPI";
-import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
+import ErrorSnackbar from "@/components/base/ErrorSnackbar.vue";
 import FileSaver from "file-saver";
 
 export default {

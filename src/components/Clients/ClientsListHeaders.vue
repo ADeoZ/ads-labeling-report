@@ -16,6 +16,7 @@
 <script>
 export default {
   name: "ClientsListHeaders",
+
   props: {
     label: {
       type: String,
@@ -30,17 +31,19 @@ export default {
       required: false,
     },
   },
-  methods: {
-    emitEvent() {
-      this.$emit("clickHeader");
-    },
-  },
+
   computed: {
     selectIcon() {
       if (this.icon) {
         return this.icon === 1 ? "mdi-chevron-down" : "mdi-chevron-up";
       }
       return "";
+    },
+  },
+
+  methods: {
+    emitEvent() {
+      this.$emit("clickHeader");
     },
   },
 };

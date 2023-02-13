@@ -18,23 +18,26 @@
 </template>
 
 <script>
-import ModalForm from "@/components/Base/ModalForm.vue";
-import AddClientForm from "@/components/AddClientForm.vue";
-import ClientsListLogin from "@/components/ClientsListLogin.vue";
+import ModalForm from "@/components/base/ModalForm.vue";
+import AddClientForm from "@/components/Clients/AddClientForm.vue";
+import ClientsListLogin from "@/components/Clients/ClientsListLogin.vue";
 
 export default {
   name: "ClientsListItem",
+
   components: {
     ModalForm,
     AddClientForm,
     ClientsListLogin,
   },
+
   props: {
     client: {
       type: Object,
       required: true,
     },
   },
+
   computed: {
     translate_type() {
       return this.client.contractor_type === "ul" ? "юр. лицо" : "ИП";

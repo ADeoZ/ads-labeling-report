@@ -66,15 +66,16 @@
 </template>
 
 <script>
-import ModalForm from "@/components/Base/ModalForm.vue";
-import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
-import ClientsListItem from "@/components/ClientsListItem.vue";
-import ClientsListHeaders from "@/components/ClientsListHeaders.vue";
-import AddClientForm from "@/components/AddClientForm.vue";
+import ModalForm from "@/components/base/ModalForm.vue";
+import ErrorSnackbar from "@/components/base/ErrorSnackbar.vue";
+import ClientsListItem from "@/components/Clients/ClientsListItem.vue";
+import ClientsListHeaders from "@/components/Clients/ClientsListHeaders.vue";
+import AddClientForm from "@/components/Clients/AddClientForm.vue";
 import { mapState } from "vuex";
 
 export default {
   name: "ClientsList",
+
   components: {
     ClientsListHeaders,
     ClientsListItem,
@@ -82,6 +83,7 @@ export default {
     AddClientForm,
     ErrorSnackbar,
   },
+
   data: () => ({
     listHeaders: [
       { name: "login", label: "Логин", sortable: true },
@@ -96,6 +98,7 @@ export default {
     page: 1,
     limit: 10,
   }),
+
   computed: {
     ...mapState({
       clients: (state) => state.clients.all,
@@ -131,9 +134,11 @@ export default {
       return Math.ceil(this.filteredClients.length / this.limit);
     },
   },
+
   created() {
     this.$store.dispatch("clients/getAllClients");
   },
+
   methods: {
     selectSort(type) {
       if (this.sortColumn === type) {

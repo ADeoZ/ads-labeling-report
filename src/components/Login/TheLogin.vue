@@ -33,11 +33,12 @@
 </template>
 
 <script>
-import ErrorSnackbar from "@/components/Base/ErrorSnackbar.vue";
+import ErrorSnackbar from "@/components/base/ErrorSnackbar.vue";
 import { rules } from "@/utils/rules";
 
 export default {
   components: { ErrorSnackbar },
+
   name: "TheLogin",
 
   data: () => ({
