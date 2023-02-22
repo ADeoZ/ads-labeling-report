@@ -40,7 +40,12 @@ export default {
 
   computed: {
     translate_type() {
-      return this.client.contractor_type === "ul" ? "юр. лицо" : "ИП";
+      const clientTypesDictionary = {
+        ul: "юр. лицо",
+        ip: "ИП",
+        fl: "физ. лицо",
+      };
+      return clientTypesDictionary[this.client.contractor_type];
     },
     translate_is_end() {
       return this.client.contractor_is_end ? "Да" : "Нет";

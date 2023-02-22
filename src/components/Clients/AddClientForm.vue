@@ -43,16 +43,20 @@
         class="mb-2"
       />
 
-      <v-radio-group
+      <v-select
         v-model="client.contractor_type"
         :rules="rules.type"
         label="Тип организации"
-        mandatory
-        class="mb-2"
-      >
-        <v-radio label="Юридическое лицо" value="ul" />
-        <v-radio label="Физическое лицо" value="ip" />
-      </v-radio-group>
+        :items="[
+          { type: 'Юридическое лицо', value: 'ul' },
+          { type: 'Индивидуальный предприниматель', value: 'ip' },
+          { type: 'Физическое лицо', value: 'fl' },
+        ]"
+        item-title="type"
+        item-value="value"
+        variant="outlined"
+        class="mb-4"
+      />
 
       <v-row>
         <v-col class="py-0">
@@ -112,16 +116,20 @@
           class="mb-2"
         />
 
-        <v-radio-group
+        <v-select
           v-model="client.advertiser_type"
           :rules="rules.type"
           label="Тип организации"
-          mandatory
-          class="mb-2"
-        >
-          <v-radio label="Юридическое лицо" value="ul" />
-          <v-radio label="Физическое лицо" value="ip" />
-        </v-radio-group>
+          :items="[
+            { type: 'Юридическое лицо', value: 'ul' },
+            { type: 'Индивидуальный предприниматель', value: 'ip' },
+            { type: 'Физическое лицо', value: 'fl' },
+          ]"
+          item-title="type"
+          item-value="value"
+          variant="outlined"
+          class="mb-4"
+        />
 
         <v-row>
           <v-col class="py-0">
