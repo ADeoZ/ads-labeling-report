@@ -39,7 +39,7 @@
         mandatory
       >
         <v-radio label="Юридическое лицо" value="ul" />
-        <v-radio label="Физическое лицо" value="ip" />
+        <v-radio label="Индивидуальный предприниматель" value="ip" />
       </v-radio-group>
 
       <div v-if="!editMode" class="w-100 d-flex justify-end">
